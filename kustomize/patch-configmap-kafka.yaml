@@ -1,0 +1,7 @@
+---
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: not-used
+data:
+  kafka.bootstrap.servers: PLAINTEXT://fights-kafka-kafka-bootstrap:9092

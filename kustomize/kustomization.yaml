@@ -1,0 +1,24 @@
+---
+apiVersion: kustomize.config.k8s.io/v1beta1
+kind: Kustomization
+
+resources:
+- apicurio
+- event-statistics
+- villains-db
+- heroes-db
+- fights-db
+- rest-villains
+- rest-heroes
+- rest-fights
+- ui-super-heroes
+
+patches:
+
+- path: patch-configmap-kafka.yaml
+  target:
+    name: rest-fights-config
+
+- path: patch-configmap-kafka.yaml
+  target:
+    name: event-statistics-config
