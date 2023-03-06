@@ -16,4 +16,4 @@ patches:
     metadata:
       name: rest-villains-config
     data:
-      mp.openapi.servers: http://unknown:8080
+      quarkus.smallrye-openapi.servers: http://unknown:8080
