@@ -13,7 +13,7 @@ metadata:
     system: quarkus-super-heroes
     app.kubernetes.io/part-of: apicurio
     app.kubernetes.io/name: apicurio
-    app.kubernetes.io/version: 2.2.3.Final
+    app.kubernetes.io/version: 2.4.2.Final
     app.openshift.io/runtime: apicurio
   name: apicurio
 spec:
@@ -37,7 +37,7 @@ spec:
         - env:
             - name: REGISTRY_AUTH_ANONYMOUS_READ_ACCESS_ENABLED
               value: "true"
-          image: quay.io/apicurio/apicurio-registry-mem:2.2.3.Final
+          image: quay.io/apicurio/apicurio-registry-mem:2.4.2.Final
           livenessProbe:
             failureThreshold: 3
             httpGet:

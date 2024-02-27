@@ -11,7 +11,7 @@ metadata:
   annotations:
     app.openshift.io/connects-to: '[{"apiVersion":"apps/v1","kind":"Deployment","name":"rest-fights"}]'
     prometheus.io/scrape: "true"
-    prometheus.io/path: /metrics
+    prometheus.io/path: /q/metrics
     prometheus.io/port: "8080"
     prometheus.io/scheme: http
   name: ui-super-heroes
@@ -29,43 +29,53 @@ spec:
         system: quarkus-super-heroes
       annotations:
         prometheus.io/scrape: "true"
-        prometheus.io/path: /metrics
+        prometheus.io/path: /q/metrics
         prometheus.io/port: "8080"
         prometheus.io/scheme: http
     spec:
       containers:
-        - image: quay.io/quarkus-super-heroes/ui-super-heroes:latest
-          name: ui-super-heroes
+        - name: ui-super-heroes
+          image: ui-super-heroes:java17-latest-3.2.Final
           imagePullPolicy: Always
           env:
             - name: CALCULATE_API_BASE_URL
               value: "true"
-          livenessProbe:
-            failureThreshold: 3
-            httpGet:
-              path: /
-              port: 8080
-              scheme: HTTP
-            initialDelaySeconds: 0
-            periodSeconds: 30
-            successThreshold: 1
-            timeoutSeconds: 10
           ports:
             - containerPort: 8080
               protocol: TCP
               name: http
+          livenessProbe:
+            failureThreshold: 3
+            httpGet:
+              path: /q/health/live
+              port: 8080
+              scheme: HTTP
+            initialDelaySeconds: 5
+            periodSeconds: 10
+            successThreshold: 1
+            timeoutSeconds: 10
           readinessProbe:
             failureThreshold: 3
             httpGet:
-              path: /
+              path: /q/health/ready
               port: 8080
               scheme: HTTP
-            initialDelaySeconds: 0
-            periodSeconds: 30
+            initialDelaySeconds: 5
+            periodSeconds: 10
+            successThreshold: 1
+            timeoutSeconds: 10
+          startupProbe:
+            failureThreshold: 3
+            httpGet:
+              path: /q/health/started
+              port: 8080
+              scheme: HTTP
+            initialDelaySeconds: 5
+            periodSeconds: 10
             successThreshold: 1
             timeoutSeconds: 10
           resources:
             limits:
-              memory: 128Mi
+              memory: 768Mi
             requests:
-              memory: 32Mi
+              memory: 256Mi

@@ -4,7 +4,7 @@ kind: Deployment
 metadata:
   annotations:
     app.openshift.io/connects-to: '[{"apiVersion":"apps/v1","kind":"Deployment","name":"fights-db"},{"apiVersion":"apps/v1","kind":"Deployment","name":"rest-villains"},{"apiVersion":"apps/v1","kind":"Deployment","name":"rest-heroes"},{"apiVersion":"kafka.strimzi.io/v1beta2","kind":"Kafka","name":"fights-kafka"},{"apiVersion":"apps/v1","kind":"Deployment","name":"apicurio"},{"apiVersion":"opentelemetry.io/v1alpha1","kind":"OpenTelemetryCollector","name":"otel-collector"}]'
-    app.openshift.io/vcs-ref: rhbq-2.13
+    app.openshift.io/vcs-ref: rhbq-3.2
     app.openshift.io/vcs-url: https://github.com/quarkusio/quarkus-super-heroes
     app.quarkus.io/build-timestamp: 2023-02-24 - 13:05:29 +0000
     prometheus.io/scrape: "true"
@@ -14,7 +14,7 @@ metadata:
   labels:
     app.kubernetes.io/name: rest-fights
     app.kubernetes.io/part-of: fights-service
-    app.kubernetes.io/version: java17-latest-rhbq-2.13
+    app.kubernetes.io/version: java17-latest-3.2.Final
     app: rest-fights
     application: fights-service
     system: quarkus-super-heroes
@@ -26,11 +26,11 @@ spec:
     matchLabels:
       app.kubernetes.io/part-of: fights-service
       app.kubernetes.io/name: rest-fights
-      app.kubernetes.io/version: java17-latest-rhbq-2.13
+      app.kubernetes.io/version: java17-latest-3.2.Final
   template:
     metadata:
       annotations:
-        app.openshift.io/vcs-ref: rhbq-2.13
+        app.openshift.io/vcs-ref: rhbq-3.2
         app.openshift.io/vcs-url: https://github.com/quarkusio/quarkus-super-heroes
         app.quarkus.io/build-timestamp: 2023-02-24 - 13:05:29 +0000
         prometheus.io/scrape: "true"
@@ -44,7 +44,7 @@ spec:
         app.openshift.io/runtime: quarkus
         app.kubernetes.io/part-of: fights-service
         app.kubernetes.io/name: rest-fights
-        app.kubernetes.io/version: java17-latest-rhbq-2.13
+        app.kubernetes.io/version: java17-latest-3.2.Final
     spec:
       containers:
         - env:
@@ -57,7 +57,7 @@ spec:
                 name: rest-fights-config-creds
             - configMapRef:
                 name: rest-fights-config
-          image: quay.io/quarkus-super-heroes/rest-fights:java17-latest-rhbq-2.13
+          image: quay.io/quarkus-super-heroes/rest-fights:java17-latest-3.2.Final
           imagePullPolicy: Always
           livenessProbe:
             failureThreshold: 3
@@ -65,8 +65,8 @@ spec:
               path: /q/health/live
               port: 8082
               scheme: HTTP
-            initialDelaySeconds: 0
-            periodSeconds: 30
+            initialDelaySeconds: 5
+            periodSeconds: 10
             successThreshold: 1
             timeoutSeconds: 10
           name: rest-fights
@@ -80,8 +80,18 @@ spec:
               path: /q/health/ready
               port: 8082
               scheme: HTTP
-            initialDelaySeconds: 0
-            periodSeconds: 30
+            initialDelaySeconds: 5
+            periodSeconds: 10
+            successThreshold: 1
+            timeoutSeconds: 10
+          startupProbe:
+            failureThreshold: 3
+            httpGet:
+              path: /q/health/started
+              port: 8082
+              scheme: HTTP
+            initialDelaySeconds: 5
+            periodSeconds: 10
             successThreshold: 1
             timeoutSeconds: 10
           resources:
