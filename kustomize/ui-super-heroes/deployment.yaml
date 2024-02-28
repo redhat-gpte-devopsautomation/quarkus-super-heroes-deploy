@@ -35,7 +35,7 @@ spec:
     spec:
       containers:
         - name: ui-super-heroes
-          image: ui-super-heroes:java17-latest-3.2.Final
+          image: quay.io/quarkus-super-heroes/ui-super-heroes:java17-latest-3.2.Final
           imagePullPolicy: Always
           env:
             - name: CALCULATE_API_BASE_URL
