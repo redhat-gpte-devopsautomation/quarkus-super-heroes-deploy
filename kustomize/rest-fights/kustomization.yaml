@@ -22,11 +22,3 @@ patches:
           containers:
             - name: rest-fights
               image: rest-fights:latest
-
-- patch: |-
-    apiVersion: v1
-    kind: ConfigMap
-    metadata:
-      name: rest-fights-config
-    data:
-      quarkus.smallrye-openapi.servers: http://unknown:8080
