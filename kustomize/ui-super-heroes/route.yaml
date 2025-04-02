@@ -13,3 +13,6 @@ spec:
     name: ui-super-heroes
   port:
     targetPort: 8080
+  tls:
+    termination: edge
+  wildcardPolicy: None

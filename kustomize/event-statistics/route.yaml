@@ -21,3 +21,6 @@ spec:
   to:
     kind: Service
     name: event-statistics
+  tls:
+    termination: edge
+  wildcardPolicy: None
