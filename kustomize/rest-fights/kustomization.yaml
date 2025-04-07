@@ -9,11 +9,6 @@ resources:
 - service.yaml
 - route.yaml
 
-# Three notes here:
-# 1. The BuildConfig was not kicked off automatically, but the lab makes it seem like everything should work from the beginning
-# 2. I ran the BuildConfig manually and the resulting image did not work
-# 3. Separate from the image not working I had to use the full image url `image-registry.openshift-image-registry.svc:5000/quarkus-superheroes-user1/rest-fights` to get it to work
-# although changing the image stream to `lookupPolicy.local` should also work in theory.
 patches:
 
 - patch: |-
