@@ -21,3 +21,6 @@ spec:
   to:
     kind: Service
     name: rest-villains
+  tls:
+    termination: edge
+  wildcardPolicy: None
